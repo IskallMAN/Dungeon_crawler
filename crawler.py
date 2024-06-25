@@ -18,10 +18,8 @@ maze_l = 51
 maze = randomized_dfs_maze((1,1),maze_l,maze_l)
 maze_cell_width = 6
 floor_and_walls = [[87]*maze_l*maze_cell_width for i in range(maze_l*maze_cell_width)]
-print(len(floor_and_walls),len(floor_and_walls[0]))
 wall,dirt = set(),set()
 
-#you can actually place the right kind of wall (top, right, left and bottom) from the beginning and worry about the corners later
 for i in range(maze_l):
     for j in range(maze_l):
         if maze[i][j] == 1:
@@ -50,6 +48,7 @@ for i in range(maze_l):
                 for y in range(j*maze_cell_width, (j+1)*maze_cell_width):
                     floor_and_walls[x][y] = choice(list(dirt_tiles))
 
+#walls = build_walls()
 
 def write(text : str, color : tuple, position : tuple, size : int, font_name : str = 'Helvetica') -> None:
     if not (size,font_name) in font_dict:
@@ -58,9 +57,9 @@ def write(text : str, color : tuple, position : tuple, size : int, font_name : s
 
 def show_maze():
     screen.fill(WHITE)
-    for i in range(max(1+round(player_1.x//16),0),min(len(floor_and_walls),round(WIDTH+player_1.x)//16)):
-        for j in range(max(1+round(player_1.y//16),0),min(len(floor_and_walls[0]),round(HEIGHT+player_1.y)//16)):
-            screen.blit(tiles[floor_and_walls[i][j]],(i*16-player_1.x,j*16-player_1.y))
+    for i in range(max(1+round(player_1.x//tile_display_width),0),min(len(floor_and_walls),round(WIDTH+player_1.x)//tile_display_width)):
+        for j in range(max(1+round(player_1.y//tile_display_width),0),min(len(floor_and_walls[0]),round(HEIGHT+player_1.y)//tile_display_width)):
+            screen.blit(tiles[floor_and_walls[i][j]],(i*tile_display_width-player_1.x,j*tile_display_width-player_1.y))
     player_1.show(screen)
     for e in enemies:
         e.show(screen,player_1)
@@ -76,3 +75,4 @@ while True:
     player_1.move()
     show_maze()
     display.flip()
+
