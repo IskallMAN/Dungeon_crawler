@@ -58,8 +58,8 @@ def write(text : str, color : tuple, position : tuple, size : int, font_name : s
 
 def show_maze():
     screen.fill(WHITE)
-    for i in range(max(round(-player_1.x//16),0),min(len(floor_and_walls),WIDTH-(player_1.x//16))):
-        for j in range(max(round(-player_1.y//16),0),min(len(floor_and_walls[0]),HEIGHT-(player_1.y//16))):
+    for i in range(max(1+round(player_1.x//16),0),min(len(floor_and_walls),round(WIDTH+player_1.x)//16)):
+        for j in range(max(1+round(player_1.y//16),0),min(len(floor_and_walls[0]),round(HEIGHT+player_1.y)//16)):
             screen.blit(tiles[floor_and_walls[i][j]],(i*16-player_1.x,j*16-player_1.y))
     player_1.show(screen)
     for e in enemies:
