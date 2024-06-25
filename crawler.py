@@ -50,7 +50,6 @@ for i in range(maze_l):
                 for y in range(j*maze_cell_width, (j+1)*maze_cell_width):
                     floor_and_walls[x][y] = choice(list(dirt_tiles))
 
-#walls = build_walls()
 
 def write(text : str, color : tuple, position : tuple, size : int, font_name : str = 'Helvetica') -> None:
     if not (size,font_name) in font_dict:
@@ -59,14 +58,6 @@ def write(text : str, color : tuple, position : tuple, size : int, font_name : s
 
 def show_maze():
     screen.fill(WHITE)
-#    for e in wall:
-#        x,y = e[0]*16-player_1.x, e[1]*16-player_1.y
-#        if x >= 0 and x < WIDTH and y >= 0 and y < HEIGHT:
-#            screen.fill(BLACK,rect=(x,y,16,16))
-#    for e in dirt:
-#        x,y = e[0]*16-player_1.x, e[1]*16-player_1.y
-#        if x >= 0 and x < WIDTH and y >= 0 and y < HEIGHT:
-#            screen.fill((0,255,0),rect=(x,y,16,16))
     for i in range(max(round(-player_1.x//16),0),min(len(floor_and_walls),WIDTH-(player_1.x//16))):
         for j in range(max(round(-player_1.y//16),0),min(len(floor_and_walls[0]),HEIGHT-(player_1.y//16))):
             screen.blit(tiles[floor_and_walls[i][j]],(i*16-player_1.x,j*16-player_1.y))
