@@ -19,31 +19,28 @@ class enemy:
     
     def show(self,screen,player):
         screen.blit(self.frame_list[self.lr][self.frame],(self.x-player.x,self.y-player.y))
-        if self.frame_count == 30:
+        if self.frame_count == 5:
             self.frame = (self.frame + 1)%4
             self.frame_count = 0
         self.frame_count += 1
 
 class player:
     def __init__(self,x,y,vx,vy):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.dash_cooldown = 0
-        self.facing_x = 0
-        self.facing_y = 0
-        self.frame_list = [[transform.scale(image.load(f"sprites\\vampire1\\vampire1_{i}.png"),(64,64)) for i in range(1,5)]]
+        self.x, self.y = x, y
+        self.vx, self.vy = vx, vy
+        self.dash_cooldown, self.amplifier = 0, 0
+        self.facing_x, self.facing_y = 0, 0
+        self.frame_list = [[transform.scale(image.load(f"sprites\\vampire2\\vampire2_{i}.png"),(64,64)) for i in range(1,5)]]
         self.frame_list.append([transform.flip(e,1,0) for e in self.frame_list[0]])
         self.frame = 0
         self.lr = 0
         self.frame_count = 0
         self.is_moving = False
 
-    def move(self):
+    def get_speed(self):
         if self.dash_cooldown != 0:
             self.dash_cooldown -= 1
-        amplifier = 1
+        self.amplifier = 1
         keys = key.get_pressed()
         if keys[K_z] or keys[K_s] or keys[K_d] or keys[K_q]:
             self.facing_x = 0
@@ -54,31 +51,42 @@ class player:
         self.vx *= 0.95
         self.vy *= 0.95
         if keys[K_z]:
-            self.vy = min(-0.5,self.vy)
+            self.vy = min(-7,self.vy)
             self.facing_y -= 1
         if keys[K_s]:
-            self.vy = max(0.5,self.vy)
+            self.vy = max(7,self.vy)
             self.facing_y += 1
         if keys[K_q]:
-            self.vx = min(-0.5,self.vx)
+            self.vx = min(-7,self.vx)
             self.facing_x -= 1
             self.lr = 1
         if keys[K_d]:
-            self.vx = max(0.5,self.vx)
+            self.vx = max(7,self.vx)
             self.facing_x += 1
             self.lr = 0
         if keys[K_LSHIFT]:
-            amplifier = 0.5
+            self.amplifier = 0.5
         if keys[K_SPACE] and self.dash_cooldown == 0:
-            self.vy = self.facing_y*10
-            self.vx = self.facing_x*10
-            self.dash_cooldown = 200
-        self.x += self.vx*amplifier
-        self.y += self.vy*amplifier
-    
+            self.vy = self.facing_y*30
+            self.vx = self.facing_x*30
+            self.dash_cooldown = 100
+
+    def move(self, w, maze):
+        y_c = round(self.y//w)
+        self.x += self.vx*self.amplifier
+        x_c = round(self.x//w)
+        if maze[x_c][y_c] == 1:
+            self.x -= self.vx*self.amplifier
+        x_c = round(self.x//w)
+        self.y += self.vy*self.amplifier
+        y_c = round(self.y//w)
+        if maze[x_c][y_c] == 1:
+            self.y -= self.vy*self.amplifier
+
     def show(self,screen):
-        screen.blit(self.frame_list[self.lr][self.frame],(640-64,360-64))
-        if self.frame_count == 30:
+        screen.blit(self.frame_list[self.lr][self.frame],(640-32,360-32))
+        screen.fill((255,0,0),rect=(639,359,3,3))
+        if self.frame_count == 5:
             self.frame = (self.frame + 1)%4
             self.frame_count = 0
         if self.is_moving:
