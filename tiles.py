@@ -5,8 +5,9 @@ screen = display.set_mode((1280,720), FULLSCREEN)
 font.init()
 
 #width = 50
+tile_display_width = 64
 tileset = image.load("2D Pixel Dungeon Asset Pack\character and tileset\Dungeon_Tileset.png")
-tiles = [tileset.subsurface(16*i,16*j,16,16) for i in range(10) for j in range(10)]
+tiles = [transform.scale(tileset.subsurface(16*i,16*j,16,16),(tile_display_width,tile_display_width)) for i in range(10) for j in range(10)]
 
 dirt_tiles = {60,61,62,70,72,80,81,82,90,91,92,7,17,27,37,22}
 wall_dirt_tile = {}
