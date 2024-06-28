@@ -6,7 +6,7 @@ font.init()
 
 #width = 50
 tile_display_width = 64
-tileset = image.load("2D Pixel Dungeon Asset Pack\character and tileset\Dungeon_Tileset.png")
+tileset = image.load("Dungeon_Tileset.png")
 tiles = [transform.scale(tileset.subsurface(16*i,16*j,16,16),(tile_display_width,tile_display_width)) for i in range(10) for j in range(10)]
 
 dirt_tiles = {60,61,62,70,72,80,81,82,90,91,92,7,17,27,37,22}
@@ -67,7 +67,6 @@ def fill_dirt(dirt : set,wall : set, max_size = 1000) -> set:
             for neighboor in [(0,1),(1,0),(0,-1),(-1,0)]:
                 if (e[0]+neighboor[0],e[1]+neighboor[1]) not in wall:
                     dirt.add((e[0]+neighboor[0],e[1]+neighboor[1]))
-    print(len(dirt))
     return dirt
 
 if __name__ == "__main__":

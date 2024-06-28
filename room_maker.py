@@ -19,7 +19,7 @@ def write(text : str, color : tuple, position : tuple, size : int, font_name : s
     screen.blit(font_dict[size,font_name].render(text,False,color),position)
 
 tile_preview_size = 16
-tileset = image.load("2D Pixel Dungeon Asset Pack\character and tileset\Dungeon_Tileset.png")
+tileset = image.load("Dungeon_Tileset.png")
 tiles = [transform.scale(tileset.subsurface(16*i,16*j,16,16),(tile_preview_size,tile_preview_size)) for i in range(10) for j in range(10)]
 tiles.append(image.load("placeholder.png"))
 floor_tiles = [60,61,62,70,71,72,80,81,82,90,91,92,7,17,27,37]

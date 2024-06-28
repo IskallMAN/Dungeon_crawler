@@ -54,24 +54,3 @@ while True:
     enemy_1.seek(m_player,maze)
     draw_maze(maze)
     display.flip()
-
-
-"""
-keys = key.get_pressed()
-if keys[K_UP]:
-    if maze[x][y-1] == 0:
-        y -= 1
-        path = a_star(maze,(1,1),(x,y))
-if keys[K_DOWN]:
-    if maze[x][y+1] == 0:
-        y += 1
-        path = a_star(maze,(1,1),(x,y))
-if keys[K_LEFT]:
-    if maze[x-1][y] == 0:
-        x -= 1
-        path = a_star(maze,(1,1),(x,y))
-if keys[K_RIGHT]:
-    if maze[x+1][y] == 0:
-        x += 1
-        path = a_star(maze,(1,1),(x,y))
-"""
